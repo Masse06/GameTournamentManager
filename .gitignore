@@ -1,1 +1,41 @@
-out/production/GameTournamentManager
+# Archivos compilados de Java
+*.class
+
+# Archivos de log
+*.log
+
+# Directorios de compilación
+/build/
+out/
+
+# Archivos de configuración de IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+*.hprof
+
+# Archivos de dependencias de Maven
+target/
+
+# Archivos de dependencias de Gradle
+.gradle/
+build/
+*.jar
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuraciones específicas del usuario (ajustes del IDE)
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/vcs.xml
+.idea/misc.xml
