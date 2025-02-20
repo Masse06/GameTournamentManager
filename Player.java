@@ -48,7 +48,7 @@ public class Player {
         this.level = level;
     }
 
-    public int getPuntos() {
+    public int getPoints() {
         return points;
     }
 
@@ -58,14 +58,10 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player:" +
-                "\nnameTag='" + nameTag +
-                "\nname='" + name +
-                "\nsurname='" + surname +
-                "\nlevel=" + level +
-                "\npoints=" + points;
+        return nameTag + ", " + name + ", " + surname +
+                ", " + level + ", " + points;
     }
-    
+
     // Methods
     
     public void winPoints() {
