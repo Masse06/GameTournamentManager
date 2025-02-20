@@ -1,4 +1,0 @@
-dani, daniel, martinez, 3, 0
-jessik3, jessica, caca mart, 2, 0
-rocio, rocio, fernandez, 1, 0
-prueba, prueba, prueba, 10, 20
