@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Tournament {
     private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Player> facingPlayers = new ArrayList<>();
     public static Scanner sc = new Scanner(System.in);
 
     public static void loadPlayersFromFile() {
@@ -66,13 +67,82 @@ public class Tournament {
     }
 
     public static void facePlayers() {
-        System.out.println("Proximamente...");
+        facingPlayers.clear(); // Limpiar la lista antes de un nuevo enfrentamiento
+
+        for (int i = 0; i < 2; i++) { // Seleccionar dos jugadores
+            System.out.print("Ingrese el nombre del jugador " + (i + 1) + " que desea enfrentar: ");
+            String playerName = sc.nextLine();
+
+            boolean found = false;
+            for (Player player : players) {
+                if (player.getNameTag().equalsIgnoreCase(playerName)) {
+                    facingPlayers.add(player);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                System.out.println("Jugador no encontrado. Intente nuevamente.");
+                i--; // Para que el usuario pueda ingresar de nuevo el nombre
+            }
+        }
+
+        Player player1 = facingPlayers.get(0);
+        Player player2 = facingPlayers.get(1);
+
+        System.out.println("\n⚔️ Enfrentamiento entre " + player1.getNameTag() + " y " + player2.getNameTag() + " ⚔️");
+
+        // Determinar ganador y perdedor
+        Player winner;
+        Player loser;
+        if (player1.getLevel() > player2.getLevel()) {
+            winner = player1;
+            loser = player2;
+        } else if (player2.getLevel() > player1.getLevel()) {
+            winner = player2;
+            loser = player1;
+        } else { // Si están en el mismo nivel, gana el que tenga más puntos
+            if (player1.getPoints() >= player2.getPoints()) {
+                winner = player1;
+                loser = player2;
+            } else {
+                winner = player2;
+                loser = player1;
+            }
+        }
+
+        System.out.println("🏆 El ganador es: " + winner.getNameTag());
+
+        // Asignar puntos
+        winner.winPoints();
+        if (loser.getPoints() > 0) {
+            loser.setPoints(loser.getPoints() - 5);
+        }
+
+        // Verificar si el ganador sube de nivel
+        winner.upgradeLevel();
+
+        // Guardar cambios en el archivo
+        savePlayersToFile();
     }
+
+    // Método para guardar los jugadores actualizados en el archivo
+    public static void savePlayersToFile() {
+        try (FileWriter writer = new FileWriter("./assets/files/players.txt")) {
+            for (Player player : players) {
+                writer.write(player.toString() + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar los jugadores.");
+        }
+    }
+
 
     public static void showRanking() {
         System.out.println("Ranking de Jugadores:\n");
         for (Player player : players) {
-            System.out.println("Nombre: " + player.getNameTag() + " Nivel: " + player.getLevel());
+            System.out.println("Nombre: " + player.getNameTag() + " Nivel: " + player.getLevel() + " Puntos: " + player.getPoints());
         }
     }
 }
